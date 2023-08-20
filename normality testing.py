@@ -71,7 +71,20 @@ def shapiro_wilk_test_categorical(csv_file, column):
 
 
 
+def levenes_test_categorical(csv_file, health_parameter, variation):
 
+    df = pd.read_csv(csv_file)
+
+    sepsis_group = df[df['sepsislabel'] == 1][health_parameter]
+    no_sepsis_group = df[df['sepsislabel'] == 0][health_parameter]
+
+    Center=variation
+
+    statistic, p_value = levene(sepsis_group.dropna(), no_sepsis_group.dropna(), center=variation)
+
+    alpha = 0.05
+    print("p-value:", p_value)
+    print("Levene's test statistic", statistic)
 
 
 # Independent T-Test used to compare difference between two distinct groups
