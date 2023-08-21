@@ -159,9 +159,9 @@ def mann_whitney_u_test(csv_file, health_parameter):
 
     # Check if the p-value is less than the significance level
     if p_value < alpha:
-        print(f'Reject the null hypothesis: There is a significant difference in {health_parameter} between post-admission and six hours before post-admission.')
+        print(f'Reject the null hypothesis: There is a significant difference in {health_parameter} between sepsis and non-sepsis groups')
     else:
-        print(f'Fail to reject the null hypothesis: There is no significant difference in {health_parameter} between post-admission and six hours before post-admission.')
+        print(f'Fail to reject the null hypothesis: There is no significant difference in {health_parameter} between sepsis and non-sepsis groups')
 
 
 
