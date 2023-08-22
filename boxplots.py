@@ -3,17 +3,20 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def boxplot_visualisation_temporal(csv_file, column):
+def boxplot_visualisation_temporal(csv_file,  column, column1, show_outliers=True):
+    df1 = pd.read_csv('avg_numeric_grouped_by_id+sepsislabel.csv')
     df = pd.read_csv(csv_file)
 
+
+    sepsis_0_data_1 = df1[df1['sepsislabel'] == 0]
     six_hr_pre_data = df[f'{column}_six_hour_before_admission']
     post_admission_data = df[f'{column}_postadmission_hour0_sepsis']
 
     plt.figure(figsize=(10, 8))  # Set the figure size before creating the box plot
-    ax = sns.boxplot(data=[six_hr_pre_data, post_admission_data], palette=['blue', 'orange'])
+    ax = sns.boxplot(data=[sepsis_0_data_1[column1], six_hr_pre_data, post_admission_data ], palette=[ 'red', 'blue', 'orange'], showfliers=show_outliers)
 
     # Label and legend adjustments (legend not perfect)
-    legend = ax.legend(labels=['6 Hours prior', 'Post-admission'])
+    legend = ax.legend(labels=['no sepsis group', '6 Hours prior', 'Post-admission'])
     legend.set_bbox_to_anchor((1, 1))  # Adjust the anchor point as needed
     legend.get_frame().set_linewidth(2)  # Set the border width of the legend box
 
@@ -51,9 +54,17 @@ def boxplot_visualisation_one_feature(column):
 
 
 
-boxplot_visualisation_one_feature('avg_hr')
-boxplot_visualisation_temporal('temporal_vitals.csv','hr')
 
+boxplot_visualisation_temporal('temporal_vitals.csv','hr', 'avg_hr', show_outliers=False)
+boxplot_visualisation_temporal('temporal_vitals.csv','o2', 'avg_o2sat', show_outliers=False)
+boxplot_visualisation_temporal('temporal_vitals.csv','temp', 'avg_temp', show_outliers=False)
+boxplot_visualisation_temporal('temporal_vitals.csv','sbp', 'avg_sbp', show_outliers=False)
+boxplot_visualisation_temporal('temporal_vitals.csv','map', 'avg_map', show_outliers=False)
+boxplot_visualisation_temporal('temporal_non_vitals.csv','baseexcess', 'avg_baseexcess', show_outliers=False)
+boxplot_visualisation_temporal('temporal_non_vitals.csv','fio2', 'avg_fio2', show_outliers=False)
+boxplot_visualisation_temporal('temporal_non_vitals.csv','ph', 'avg_ph', show_outliers=False)
+boxplot_visualisation_temporal('temporal_non_vitals.csv','sao2', 'avg_sao2', show_outliers=False)
+boxplot_visualisation_temporal('temporal_non_vitals.csv','hco3', 'avg_hco3', show_outliers=False)
 
 
 
